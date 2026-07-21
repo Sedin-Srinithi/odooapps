@@ -1,0 +1,76 @@
+<odoo>
+    <record id="view_company_form_taxilla" model="ir.ui.view">
+        <!-- <field name="name">res.company.form.taxilla</field> -->
+        <field name="model">res.company</field>
+        <field name="inherit_id" ref="base.view_company_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='currency_id']" position="after">
+                <group string="ASP Connector">
+
+                    <field name="x_default_asp_name"/>
+                    <field name="x_asp_license_status" readonly="1"/>
+
+                    <!-- Inactive -->
+                    <button
+                        name="action_request_activation"
+                        string="Request Activation"
+                        type="object"
+                        class="btn-primary"
+                        invisible="x_asp_license_status != 'inactive'"/>
+
+                    <!-- Pending -->
+                    <field name="x_activation_code"
+                           placeholder="Enter code e.g. AB12CD34"
+                           invisible="x_asp_license_status != 'pending'"/>
+
+                    <button
+                        name="action_verify_activation"
+                        string="Verify &amp; Activate"
+                        type="object"
+                        class="btn-success"
+                        invisible="x_asp_license_status != 'pending'"/>
+
+                    <!-- Active -->
+                    <div invisible="x_asp_license_status != 'active'"
+                         style="color:green; font-weight:bold; padding:8px 0;">
+                        ✅ License Active — Ready to send invoices
+                    </div>
+
+                    <!-- Expired -->
+                    <div invisible="x_asp_license_status != 'expired'"
+                         style="color:red; font-weight:bold; padding:8px 0;">
+                        ❌ License Expired — Please request activation again.
+                    </div>
+
+
+                    <!-- Renewal Request Button -->
+                    <button
+                        name="action_request_renewal"
+                        string="Request Renewal"
+                        type="object"
+                        class="btn-primary"
+                        invisible="x_asp_license_status != 'expired'"/>
+
+                    <!-- Renewal Pending -->
+                    <field name="x_activation_code"
+                        placeholder="Enter renewal code"
+                        invisible="x_asp_license_status != 'renewal_pending'"/>
+
+                    <button
+                        name="action_verify_activation"
+                        string="Verify Renewal"
+                        type="object"
+                        class="btn-success"
+                        invisible="x_asp_license_status != 'renewal_pending'"/> 
+                    <!-- Refresh button — always visible -->
+                    <button
+                        name="action_refresh_license_status"
+                        string="🔄 Refresh License Status"
+                        type="object"
+                        class="btn-secondary"/>
+
+                </group>
+            </xpath>
+        </field>
+    </record>
+</odoo>

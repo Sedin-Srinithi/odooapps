@@ -1,0 +1,7 @@
+<odoo>
+    <menuitem id="menu_asp_connector_root"
+              name="ASP Connector"
+              action = "base.action_res_company_form"
+              web_icon="Asp_Connector,static/description/my_custom_logo.png"
+              sequence="1"/>
+</odoo>
